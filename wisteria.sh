@@ -1,12 +1,15 @@
 #!/bin/bash
 set -e
 
-# 1. Setup Directories
+echo "Checking dependencies..."
+sudo pacman -S --needed --noconfirm base-devel libx11 xorg-server xorg-xsetroot xorg-xprop xorg-xwininfo
+
+
 CONF_DIR="$HOME/.config/wisteria"
 CONF_FILE="$CONF_DIR/wisteria.conf"
 mkdir -p "$CONF_DIR"
 
-# 2. Auto-Generate Hypr-style Config
+
 if [ ! -f "$CONF_FILE" ]; then
     echo "creating config at $CONF_FILE..."
     cat > "$CONF_FILE" << 'EOF'
@@ -25,7 +28,7 @@ bind = MOD+Shift+R, reload_config
 EOF
 fi
 
-# 3. Write and Compile C Engine
+
 mkdir -p ~/wisteria && cd ~/wisteria
 cat > wisteria.c << 'EOF'
 #include <X11/Xlib.h>
